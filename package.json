@@ -1,0 +1,19 @@
+{
+  "name": "spot-app",
+  "version": "1",
+  "type": "module",
+  "description": "A simple spotify api project",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "test": "mocha"
+  },
+  "devDependencies": {
+    "mocha": "^10.1.0"
+  },
+  "author": "me",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  }
+}
