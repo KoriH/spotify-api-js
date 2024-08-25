@@ -4,16 +4,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
   <title>Spotify Profile</title>
 </head>
 
 <body>
-  <button id="getProfile">Get Spotify Profile</button>
+
+  <div id="navbar">
+
+    <div>
+    </div>
+
+    <div class="header">
+      <h1>
+        Spotify Account Login
+      </h1>
+    </div>
+
+    <div>
+    </div>
+
+  </div>
+
+  <main id="login">
+    <div class="prompt">
+      <p class="alert">You are not logged in! Please click here to login</p>
+      <button id="getProfile">Get Spotify Profile</button>
+    </div>
+  </main>
 
 
   <script>
     document.getElementById('getProfile').addEventListener('click', function () {
-      window.location.href = '/auth'
+      const code = new URLSearchParams(window.location.search).get('code');
+      if (code === null) {
+        window.location.href = '/auth'
+      } else {
+        window.location.href = '/profile'
+      }
+
     });
   </script>
 

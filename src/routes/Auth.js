@@ -4,7 +4,7 @@ function Auth(req, res) {
   const scopes = "user-read-private user-read-email";
   const authUrl = `https://accounts.spotify.com/authorize?response_type=code&client_id=${clientId}&scope=${encodeURIComponent(scopes)}&redirect_uri=${encodeURIComponent(redirectUri)}`
 
-  res.statusCode = 302;
+  res.statusCode = 303;
   res.setHeader('Location', authUrl);
   res.end();
 }

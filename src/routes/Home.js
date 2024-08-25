@@ -5,11 +5,18 @@ import fs from 'fs';
 
 function Home(req, res) {
   const __filename = fileURLToPath(import.meta.url);
-  const filePath = path.join(dirname(__filename), '../index.html');
+  let filePath = "";
 
   // Set the headers before attempting to read the file or send any data
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/html');
+  if (req.url === '/styles.css') {
+    filePath = path.join(dirname(__filename), '../styles.css');
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/css')
+  } else {
+    filePath = path.join(dirname(__filename), '../index.html');
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/html');
+  }
 
   // Read the file and send the response
   fs.readFile(filePath, function(err, html) {

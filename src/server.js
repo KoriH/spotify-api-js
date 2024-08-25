@@ -19,6 +19,7 @@ router.createPath('/profile', Profile)
 // Authorization
 router.createPath('/auth', Auth)
 
+// Callback
 router.createPath('/callback', Callback)
 
 const server = http.createServer((req, res) => {
