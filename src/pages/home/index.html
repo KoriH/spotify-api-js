@@ -39,10 +39,12 @@
       const code = new URLSearchParams(window.location.search).get('code');
       if (code === null) {
         window.location.href = '/auth'
+        console.log('to aut')
       } else {
+        localStorage.setItem('code', code);
+        console.log("hello")
         window.location.href = '/profile'
       }
-
     });
   </script>
 

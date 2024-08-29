@@ -3,10 +3,9 @@ import path from 'path';
 import { fileURLToPath } from "url";
 import fs from "fs"
 
-function Profile(req, res) {
+export default function Profile(req, res) {
   const __filename = fileURLToPath(import.meta.url)
   const filePath = path.join(dirname(__filename), '../pages/profile.html')
-  const accessToken = localStorage.getItem('authToken')
 
   res.statusCode = 200
   res.setHeader('Content-Type', 'text/html');
@@ -20,4 +19,3 @@ function Profile(req, res) {
   })
 }
 
-export default Profile;

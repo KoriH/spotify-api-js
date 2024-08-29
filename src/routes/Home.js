@@ -8,12 +8,16 @@ function Home(req, res) {
   let filePath = "";
 
   // Set the headers before attempting to read the file or send any data
-  if (req.url === '/styles.css') {
-    filePath = path.join(dirname(__filename), '../styles.css');
+  if (req.url === '/scripts.js') {
+    filePath = path.join(dirname(__filename), '../pages/home/scripts.js')
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/javascript')
+  } else if (req.url === '/styles.css') {
+    filePath = path.join(dirname(__filename), '../pages/home/styles.css');
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/css')
   } else {
-    filePath = path.join(dirname(__filename), '../index.html');
+    filePath = path.join(dirname(__filename), '../pages/home/index.html');
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/html');
   }

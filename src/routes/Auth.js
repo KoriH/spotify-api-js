@@ -1,4 +1,4 @@
-function Auth(req, res) {
+export default function Auth(req, res) {
   const clientId = process.env.CLIENT_ID
   const redirectUri = "http://localhost:3000/callback";
   const scopes = "user-read-private user-read-email";
@@ -9,4 +9,4 @@ function Auth(req, res) {
   res.end();
 }
 
-export default Auth;
+

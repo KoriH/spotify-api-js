@@ -1,7 +1,7 @@
 import https from 'https';
 import querystring from 'querystring';
 
-function Callback(req, res) {
+export default function Callback(req, res) {
   const clientId = process.env.CLIENT_ID;
   const clientSecret = process.env.CLIENT_SECRET;
   const redirectUri = 'http://localhost:3000/callback';
@@ -11,14 +11,16 @@ function Callback(req, res) {
     return res.end('Server configuration error.');
   }
 
+  // Extract the authorization code from the query parameters
   const url = new URL(req.url, 'http://localhost:3000');
   const code = url.searchParams.get('code');
 
   if (!code) {
     res.writeHead(400, { 'Content-Type': 'text/plain' });
-    return res.end('Authorization code not found');
+    return res.end('Authorization code not found.');
   }
 
+  // Prepare the POST data for the token exchange request
   const postData = querystring.stringify({
     grant_type: 'authorization_code',
     code,
@@ -37,6 +39,10 @@ function Callback(req, res) {
     },
   };
 
+  // Flag to ensure response is sent only once
+  let responseSent = false;
+
+  // Make the request to exchange the authorization code for a Bearer token
   const tokenReq = https.request(options, (tokenRes) => {
     let data = '';
 
@@ -45,37 +51,46 @@ function Callback(req, res) {
     });
 
     tokenRes.on('end', () => {
-      if (tokenRes.statusCode === 200) {
-        const tokenData = JSON.parse(data);
-        const accessToken = tokenData.access_token;
+      if (responseSent) return; // Prevent multiple responses
 
-        // Send the access token to the client
-        if (!res.headersSent) {
-          localStorage.setItem('authToken', accessToken)
+      if (tokenRes.statusCode === 200) {
+        try {
+          const tokenData = JSON.parse(data);
+          const accessToken = tokenData.access_token;
+          // Return the access token to the client
           res.writeHead(200, { 'Content-Type': 'text/plain' });
           res.end(`Access Token: ${accessToken}`);
+        } catch (err) {
+          console.error('Error parsing token data:', err);
+          res.writeHead(500, { 'Content-Type': 'text/plain' });
+          res.end('Internal Server Error');
         }
       } else {
-        // Handle error in the token exchange
         console.error(`Failed to exchange code for token: ${tokenRes.statusCode} ${data}`);
-        if (!res.headersSent) {
-          res.writeHead(400, { 'Content-Type': 'text/plain' });
-          res.end('Failed to exchange code for token.');
-        }
+        res.writeHead(400, { 'Content-Type': 'text/plain' });
+        res.end('Failed to exchange code for token.');
       }
+      responseSent = true; // Mark the response as sent
     });
   });
 
   tokenReq.on('error', (e) => {
+    if (responseSent) return; // Prevent multiple responses
+
     console.error(`Problem with request: ${e.message}`);
-    if (!res.headersSent) {
-      res.writeHead(500, { 'Content-Type': 'text/plain' });
-      res.end('Internal Server Error');
-    }
+    res.writeHead(500, { 'Content-Type': 'text/plain' });
+    res.end('Internal Server Error');
+    responseSent = true; // Mark the response as sent
+  });
+
+  // Handle request end in case of an error during request writing
+  tokenReq.on('abort', () => {
+    if (responseSent) return; // Prevent multiple responses
+    res.writeHead(500, { 'Content-Type': 'text/plain' });
+    res.end('Request aborted');
+    responseSent = true;
   });
 
   tokenReq.write(postData);
   tokenReq.end();
 }
-
-export default Callback;
