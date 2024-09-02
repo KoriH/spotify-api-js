@@ -1,21 +1,17 @@
-# Spotify Api App 
+# Spotify Playlist Generator
 
-The goal of this application is to query the spotify api and simply return the top 5 most listened to songs. Add these songs to a database and then save them.
+This project is a server side application where a user can login with their spotify account through the spotify portal. Then using the token generated allow the user to generate new playlists based on parameters they specify. Such as genre, artists, length, etc.
 
-So then I can come back in the future and see what the top songs were for me. 
+Will likely just use a OpenAI token for the AI to generate a list of songs, then use these songs, look them up on spotify, and generate a playlist from this. 
 
-## Feature Ideas
-- query for songs played that day
-- store into database
-- have a ui to view songs
-- some metrics that go to a backend
+Another feature to develop is the ability to generate a copy of a pre-existing playlist but actually randomze the song order, as spotify shuffle sucks so generating a new playlist for the user that is actually shuffled is something I want to do.
 
-### Backend
-- Get the token for api
-- send request to the api
-- serialize and deserialize data
-- store into a server
-- show to the front end when asked
+Maybe there can also be a little dashboard that shows the user their stats, such as genres listened to, favourite artist, etc.
 
-## Frontend
-- Button that will cause the endpoint to run and serve the songs played that day
+## Road map
+
+- Get the server setup, this server should have API's that the interface can use to get stuff like redirects to auth, getting randomized song playlist, and generating playlists.
+- build a webpage for the app that will serve the content and make it easy for the user to use the service.
+
+## Technologies
+Will be a Javascript project that I use Express and maybe React in.
