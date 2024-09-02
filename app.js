@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const request = require('request');
 const path = require('path')
+const fs = require('fs')
 const querystring = require('querystring')
 const app = express();
 const PORT = 3000;
@@ -11,16 +12,27 @@ const CLIENT_ID = process.env.CLIENT_ID
 const CLIENT_SECRET = process.env.CLIENT_SECRET
 const CALLBACK_URL = process.env.CALLBACK_URL
 
-let access_token = ""
-let refresh_token = ""
+
+app.use(express.static(path.join(__dirname, 'view')))
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'view', 'index.html'))
+  console.log(req.url)
+  if (req.url === './index.css') {
+    res.setHeader('Content-type', 'text/css')
+    const file = fs.readFileSync('./view/index.css')
+    res.write(file)
+    res.end()
+  } else {
+    res.setHeader('Content-type', 'text/html')
+    const file = fs.readFileSync('./view/index.html')
+    res.write(file)
+    res.end()
+  }
 })
 
 app.get('/login', (req, res, next) => {
   let state = '8794519728302800';
-  let scope = 'user-read-private user-read-email';
+  let scope = 'user-read-private user-read-email playlist-read-private';
 
   res.redirect('https://accounts.spotify.com/authorize?' +
     querystring.stringify({
@@ -43,7 +55,7 @@ app.get('/callback', function(req, res) {
         error: 'state_mismatch'
       }));
   } else {
-    var authOptions = {
+    const authOptions = {
       url: 'https://accounts.spotify.com/api/token',
       form: {
         code: code,
@@ -57,12 +69,17 @@ app.get('/callback', function(req, res) {
       json: true
     };
 
+    // TODO: don't use request module, do it with node https module
     request.post(authOptions, function(error, response, body) {
       if (!error && response.statusCode === 200) {
-        access_token = body.access_token;
-        refresh_token = body.refresh_token;
+        let access_token = body.access_token;
+        let refresh_token = body.refresh_token;
 
-        res.send(body);
+        res.redirect('http://localhost:3000/home?' +
+          querystring.stringify({
+            access_token: access_token,
+            refresh_token: refresh_token
+          }));
 
       } else {
         res.status(response.statusCode).send(body);
@@ -73,7 +90,17 @@ app.get('/callback', function(req, res) {
 
 
 app.get('/home', (req, res) => {
-  console.log('home after login should be a dashboard')
+  if (res.url === './home.css') {
+    res.setHeader('content-type', 'text/css')
+    const file = fs.readFileSync('./view/home.css')
+    res.write(file)
+    res.end()
+  } else {
+    res.setHeader('content-type', 'text/html')
+    const file = fs.readFileSync('./view/home.html')
+    res.write(file)
+    res.end()
+  }
 })
 
 app.get('/shuffle', (req, res) => {

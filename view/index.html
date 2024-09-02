@@ -1,17 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <link rel="stylesheet" href="./index.css">
+  <title>Spotify Playlist Generator</title>
 </head>
+
 <body>
-    <h1>login page, index page, whatever</h1>
-    <button id="login"> LOGIN </button>
-    <script>
-      document.getElementById("login").addEventListener('click', () => {
-        window.location.href = "/login";
-      })
-    </script>
+  <main id="hero">
+
+    <div class="container login">
+      <div class="container header">
+        <h1 class="header">Spotify Playlist Generator</h1>
+      </div>
+
+      <div class="container button">
+        <button id="login"> LOGIN </button>
+      </div>
+    </div>
+
+    <div class="container features">
+
+      <div class="container feature new">
+        <img src="" alt="img">
+        <div class="container description">
+          <h3>Generate Playlists</h3>
+          <p>Using this app, you can use it to generate new playlists based on your existing playlists!</p>
+        </div>
+      </div>
+
+      <div class="container shuffle">
+
+        <div class="container feature random">
+          <img src="" alt="img">
+          <div class="container description">
+            <h3>Create Random Playlists</h3>
+            <p>Using this app, you can use it to generate actually random iterations of your existing playlists!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="container generate">
+
+        <div class="container feature stats">
+          <img src="" alt="img">
+          <div class="container description">
+            <h3>View Playlist Stats</h3>
+            <p>Using this app, you can use it to view your playlists stats!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+  <script>
+    document.getElementById("login").addEventListener('click', () => {
+      window.location.href = "/login";
+    })
+  </script>
+
 </body>
+
 </html>
