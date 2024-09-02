@@ -1,19 +1,16 @@
 {
-  "name": "spot-app",
-  "version": "1",
-  "type": "module",
-  "description": "A simple spotify api project",
-  "main": "src/app.js",
+  "name": "spotify-api",
+  "version": "1.0.0",
+  "description": "The goal of this application is to query the spotify api and simply return the top 5 most listened to songs. Add these songs to a database and then save them.",
+  "main": "app.js",
   "scripts": {
-    "start": "node src/app.js",
-    "test": "mocha"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "devDependencies": {
-    "mocha": "^10.1.0"
-  },
-  "author": "me",
-  "license": "MIT",
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "spotify-web-api-node": "^5.0.2"
   }
 }

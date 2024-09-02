@@ -1,5 +1,0 @@
-class SpotifyService {
-  constructor() {
-
-  }
-}
