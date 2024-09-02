@@ -5,6 +5,7 @@
 
 body {
   background-color: black;
+  overflow-x: hidden;
 }
 
 .container {
@@ -30,10 +31,10 @@ body {
   display: flex;
   flex-flow: column;
   border-radius: 15px;
-  border-color: grey;
+  border-color: #1DB954;
   border-style: solid;
-  width: clamp(300px, 50%, 50vw);
-  height: min(50%, 50vh);
+  width: clamp(300px, 80%, 70vw);
+  height: min(80%, 50vh);
 }
 
 .container.button {
@@ -43,12 +44,13 @@ body {
 
 #login {
   padding: 5px;
+  margin-top: 25px;
   width: 100px;
   height: 35px;
   font-weight: 700;
   background: #1DB954;
   color: white;
-  border-radius: 10px;
+  border-radius: 25px;
   border-spacing: 10px;
   border-color: #1DB954;
   border-style: solid;
@@ -58,12 +60,17 @@ body {
   gap: 55px;
   width: 100vw;
   height: 50vh;
+  margin-top: 50px;
 }
 
 .container.feature {
   background-color: #121212;
   border-radius: 25px;
+  border-spacing: 10px;
+  border-style: solid;
+  padding: 20px;
   width: 300px;
+  border-color: #1DB954;
   height: 80%;
   display: flex;
   gap: 15px;
