@@ -9,18 +9,29 @@
 </head>
 
 <body>
-    <div class="header-container">
-      <h1 class="header">Spotify Playlist Generator</h1>
+  <div class="header-container">
+    <h1 class="header">Spotify Playlist Generator</h1>
+  </div>
+
+  <section id="user-info">
+    <div class="container stats">
+      <h2>Logged in as <span id="displayName"></span></h2>
+      <span id="avatar"></span>
+      <ul class="container info">
+        <li class="info id">User ID: <span id="id"></span></li>
+        <li class="info email">Email: <span id="email"></span></li>
+        <li class="info uri">Spotify URI: <a id="uri" href="#"></a></li>
+        <li class="info link">Link: <a id="url" href="#"></a></li>
+      </ul>
     </div>
+  </section>
 
-    <div class="container">
-      <span id="playlist"></span>
+  <div class="container playlists">
+  </div>
 
-    </div>
+  <button id="generate">Click me to generate</button>
 
-    <button id="generate">Click me to generate</button>
-
-    <script src="home.js"></script>
+  <script src="home.js"></script>
 </body>
 
 </html>

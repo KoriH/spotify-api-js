@@ -60,7 +60,6 @@ body {
   gap: 55px;
   width: 100vw;
   height: 50vh;
-  margin-top: 50px;
 }
 
 .container.feature {
@@ -80,6 +79,7 @@ body {
 @media (max-width: 1050px) {
   .container.features {
     flex-flow: column;
+    margin-top: 50px;
   }
 
   .container.feature {

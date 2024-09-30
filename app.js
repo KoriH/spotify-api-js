@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
 
 app.get('/login', (req, res, next) => {
   let state = '8794519728302800';
-  let scope = 'user-read-private user-read-email playlist-read-private';
+  let scope = 'user-read-private user-read-email user-top-read playlist-read-private';
 
   res.redirect('https://accounts.spotify.com/authorize?' +
     querystring.stringify({
@@ -101,6 +101,35 @@ app.get('/home', (req, res) => {
     res.write(file)
     res.end()
   }
+})
+
+app.get('/playlists', (req, res) => {
+  const token = req.get('Authorization')
+  const playlistsRequest = {
+    url: 'https://api.spotify.com/v1/me/playlists?limit=1&offset=0',
+    headers: {
+      'Authorization': token
+    }
+  }
+
+  let href = "";
+  request.get(playlistsRequest, function(error, response, body) {
+    if (error) {
+      console.log('error' + error)
+      return;
+    }
+
+    const responseJson = response.toJSON();
+    const json = JSON.parse(responseJson.body);
+    const items = json.items
+    const item = items[0]
+    href = JSON.stringify(item.href)
+    console.log(href)
+  })
+})
+
+app.get('/playlist', (req, res) => {
+  console.log("should handle the looking at individual plaaylists from a url that the playlists route sends to this one")
 })
 
 app.get('/shuffle', (req, res) => {
